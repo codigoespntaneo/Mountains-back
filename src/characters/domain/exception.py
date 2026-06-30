@@ -1,2 +1,0 @@
-class CharacterImgNotValid(Exception):
-    pass

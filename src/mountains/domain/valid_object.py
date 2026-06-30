@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 import validators
-from src.characters.domain.exception import CharacterImgNotValid
+from src.mountains.domain.exception import MountainImgNotValid
 
 @dataclass(frozen=True, kw_only=True)
-class CharacterImg:
+class MountainImg:
     value:str
 
     def __post_init__(self)-> None:
         if not validators.url(self.value):
-            raise CharacterImgNotValid
+            raise MountainImgNotValid

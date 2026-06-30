@@ -1,7 +1,7 @@
 import pytest
-from src.characters.application.create_character import CreateCharacter, CreateCharacterCommand
-from src.characters.domain.models import Character
-from src.characters.domain.repository import CharacterRepository
+from src.mountains.application.create_character import CreateCharacter, CreateCharacterCommand
+from src.mountains.domain.models import Character
+from src.mountains.domain.repository import CharacterRepository
 
 class FakeCharacterRepository(CharacterRepository):
     def __init__(self):

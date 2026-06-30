@@ -1,0 +1,2 @@
+class MountainImgNotValid(Exception):
+    pass
