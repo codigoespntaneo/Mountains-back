@@ -1,25 +1,26 @@
 from dataclasses import dataclass
+from src.mountains.domain.valid_object import MountainImg
 from src.mountains.domain.models import Mountain
 from src.mountains.domain.repository import MountainRepository
-from src.mountains.domain.valid_object import MountainImg
 
 @dataclass
-class CreateMountainCommand:
+class UpdateMountainCommand:
+    id: int
     name: str
     country: str
     height: int
     img: str
 
-class CreateMountain:
+class UpdateMountain:
     def __init__(self, mountain_repository: MountainRepository):
         self._mountain_repository = mountain_repository
-        
-    def execute(self, command: CreateMountainCommand) -> Mountain:
+
+    def execute(self, command: UpdateMountainCommand) -> Mountain | None:
+        mountain_img = MountainImg(value=command.img)
         mountain = Mountain(
             name=command.name,
             country=command.country,
             height=command.height,
-            img=MountainImg(value=command.img)
+            img=mountain_img
         )
-        self._character_repository.save(mountain)
-        return mountain
+        return self._mountain_repository.update(command.id, mountain)

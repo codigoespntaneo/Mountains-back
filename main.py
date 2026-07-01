@@ -1,8 +1,19 @@
 from fastapi import FastAPI 
-from src.mountains.infraestructure.api import router as character_router
+from fastapi.middleware.cors import CORSMiddleware
+from src.shared.infraestructure.api import router as shared_router
+from src.mountains.infraestructure.api import router as mountain_router
 
 app = FastAPI()
-app.include_router(character_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.include_router(shared_router)
+app.include_router(mountain_router)
 
 
 
