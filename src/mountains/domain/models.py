@@ -9,7 +9,13 @@ class Mountain:
         self._img = img
     @classmethod
     def create(cls, name:str, country:str, height:int, img:str)->"Mountain":
-        return cls(name, country, height, img)
+        return cls(
+            id=None,
+            name=name,
+            country=country,
+            height=height,
+            img=MountainImg(value=img),
+        )
     
     def name(self) -> str:
         return self._name
