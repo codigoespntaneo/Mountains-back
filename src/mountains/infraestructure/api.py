@@ -27,12 +27,13 @@ class MountainResponse(BaseModel):
     
     @classmethod
     def from_domain(cls, mountain: Mountain) -> "MountainResponse":
+        img = mountain.img()
         return cls(
             id=mountain.id(),
             name=mountain.name(),
             country=mountain.country(),
             height=mountain.height(),
-            img=mountain.img().value
+            img=img.value if img is not None else "",
         )
 
 @router.get("/mountains/")
@@ -44,7 +45,7 @@ def get_all_mountains() -> list[MountainResponse]:
 def get_mountain_by_id(id: int) -> MountainResponse:
     mountain = GetMountainById(SQLModelMountainRepository()).execute(id)
     if mountain is None:
-        raise HTTPException(status_code=404, detail="Character not found")
+        raise HTTPException(status_code=404, detail="Mountain not found")
     return MountainResponse.from_domain(mountain)
 
 @router.post("/mountains/")
@@ -71,7 +72,7 @@ def update_mountain(id: int, payload: MountainPayload) -> MountainResponse:
         )
     )
     if mountain is None:
-        raise HTTPException(status_code=404, detail="Character not found")
+        raise HTTPException(status_code=404, detail="Mountain not found")
     return MountainResponse.from_domain(mountain)
 
 class DeleteResponse(BaseModel):
@@ -83,5 +84,5 @@ def delete_mountain(id: int) -> DeleteResponse:
         DeleteMountainCommand(id=id)
     )
     if not deleted:
-        raise HTTPException(status_code=404, detail="Character not found")
-    return DeleteResponse(message="Character deleted successfully")
+        raise HTTPException(status_code=404, detail="Mountain not found")
+    return DeleteResponse(message="Mountain deleted successfully")

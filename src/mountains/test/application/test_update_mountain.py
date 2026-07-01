@@ -6,29 +6,31 @@ from src.mountains.domain.valid_object import MountainImg
 
 class FakeMountainRepository(MountainRepository):
     def __init__(self):
-        self._mountains = []
+        self._mountains = {}
         self._next_id = 1
     
-    def save(self, mountain: Mountain) -> None:
-        self._mountains.append(mountain)
+    def save(self, mountain: Mountain) -> Mountain:
+        self._mountains[self._next_id] = mountain
+        self._next_id += 1
+        return mountain
 
     def all(self) -> list[Mountain]:
-        return list(self._mountains)
+        return list(self._mountains.values())
     
     def get_by_id(self, id: int) -> Mountain | None:
-        for m in self._mountains:
-            if id == self._next_id:
-                return m
-        return None
+        return self._mountains.get(id)
     
     def update(self, id: int, mountain: Mountain) -> Mountain | None:
-        if 0 < id <= len(self._mountains):
-            self._mountains[id - 1] = mountain
+        if id in self._mountains:
+            self._mountains[id] = mountain
             return mountain
         return None
     
     def delete(self, id: int) -> bool:
-        return True
+        if id in self._mountains:
+            del self._mountains[id]
+            return True
+        return False
 
 
 class TestUpdateMountain:

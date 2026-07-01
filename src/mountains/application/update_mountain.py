@@ -18,6 +18,7 @@ class UpdateMountain:
     def execute(self, command: UpdateMountainCommand) -> Mountain | None:
         mountain_img = MountainImg(value=command.img)
         mountain = Mountain(
+            id=None,
             name=command.name,
             country=command.country,
             height=command.height,

@@ -9,9 +9,11 @@ class FakeMountainRepository(MountainRepository):
         self._mountains = {}
         self._next_id = 1
     
-    def save(self, mountain: Mountain) -> None:
+    def save(self, mountain: Mountain) -> Mountain:
         self._mountains[self._next_id] = mountain
+        mountain._id = self._next_id
         self._next_id += 1
+        return mountain
 
     def all(self) -> list[Mountain]:
         return list(self._mountains.values())

@@ -7,11 +7,21 @@ class FakeMountainRepository(MountainRepository):
     def __init__(self):
         self._mountains = []
 
-    def save(self, mountain: Mountain) -> None: 
+    def save(self, mountain: Mountain) -> Mountain:
         self._mountains.append(mountain)
+        return mountain
 
     def all(self)->list[Mountain]: 
         return list(self._mountains)
+
+    def get_by_id(self, id: int) -> Mountain | None:
+        return None
+
+    def update(self, id: int, mountain: Mountain) -> Mountain | None:
+        return None
+
+    def delete(self, id: int) -> bool:
+        return False
 
 class TestCreateMountain:
     def test_create_mountain(self) -> None:

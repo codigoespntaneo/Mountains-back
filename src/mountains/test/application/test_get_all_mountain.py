@@ -8,8 +8,9 @@ class FakeMountainRepository(MountainRepository):
     def __init__(self):
         self._mountains = []
     
-    def save(self, mountain: Mountain) -> None:
+    def save(self, mountain: Mountain) -> Mountain:
         self._mountains.append(mountain)
+        return mountain
 
     def all(self) -> list[Mountain]:
         return list(self._mountains)
